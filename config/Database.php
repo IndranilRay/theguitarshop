@@ -8,7 +8,7 @@ class Database
 {
     // Database credentials
     private $host = "localhost";
-    private $db_name = "";
+    private $db_name = "guitar_shop";
     private $username = "root";
     private $password = "";
     public $conn = null;
