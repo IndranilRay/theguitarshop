@@ -14,7 +14,7 @@ interface iProduct
     /* Must implement this method to read all
      * product from database
      */
-    public function read();
+    public function read($offset, $records_per_page);
 
     public function count();
 

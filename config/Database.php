@@ -7,10 +7,6 @@
 class Database
 {
     // Database credentials
-    private $host = "localhost";
-    private $db_name = "guitar_shop";
-    private $username = "root";
-    private $password = "";
     public $conn = null;
 
     /* getConnection(): Method returns a vaild database connection object
@@ -20,7 +16,7 @@ class Database
         if($this->conn === null){
             try{
                 $this->conn =
-                    new PDO('mysql:host=localhost;dbname=api_portal_system', 'root','');
+                    new \PDO('mysql:host=localhost;dbname=guitar_shop', 'root','');
                 $this->conn->exec("set names utf8");
             } catch (PDOException $e){
                 echo $e->getMessage();

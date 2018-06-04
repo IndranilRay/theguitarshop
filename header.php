@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
 <!-- custom css for users -->
-<link href="libs/css/user.css" rel="stylesheet" media="screen">
+<link href="assets/css/user.css" rel="stylesheet" media="screen">
 
 </head>
 <body>

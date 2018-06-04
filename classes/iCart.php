@@ -11,5 +11,8 @@ namespace classes;
 
 interface iCart
 {
+    public function exists();
+
+    public function count();
 
 }
