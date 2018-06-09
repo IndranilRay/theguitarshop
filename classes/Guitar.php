@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ABC
+ * User: Neal
  * Date: 6/2/2018
  * Time: 11:34 AM
  */
@@ -17,6 +17,7 @@ class Guitar extends ShopProduct implements iProduct
     public $guitar_brand_id;
     public $guitar_model_id;
     public $guitar_strings_cnt;
+    public $guitar_name;
     public $guitar_tbl = 'product_guitar';
     public $parent_tbl = 'product_products';
 
@@ -48,12 +49,7 @@ class Guitar extends ShopProduct implements iProduct
         $stmt->bindParam(2, $records_per_page, \PDO::PARAM_INT);
 
         // execute query
-
-        if (!$stmt->execute()) {
-            echo "\nPDO::errorInfo():\n";
-            print_r($stmt->errorInfo());
-            die(1);
-        }
+        \Database::execute($stmt);
 
         // return values
         return $stmt;
@@ -68,13 +64,8 @@ class Guitar extends ShopProduct implements iProduct
         $stmt = $this->conn->prepare( $query );
 
         // execute query
-        $stmt->execute();
 
-        if (!$stmt->execute()) {
-            echo "\nPDO::errorInfo():\n";
-            print_r($stmt->errorInfo());
-            die(1);
-        }
+        \Database::execute($stmt);
 
         // get row value
         $rows = $stmt->fetch(\PDO::FETCH_NUM);
@@ -84,11 +75,57 @@ class Guitar extends ShopProduct implements iProduct
 
     }
 
-    public function readById(){
+    public function readByIds($ids){
+        $ids_arr = str_repeat('?,', count($ids) - 1) . '?';
+
+        $query = "SELECT p.prod_id as product_id, p.price, p.type, g.name as guitar_name,
+                  g.type as guitar_type, g.no_of_strings as strings
+                  FROM " . $this->parent_tbl . " p
+                  LEFT JOIN $this->guitar_tbl g ON g.prod_id = p.prod_id
+                  WHERE g.prod_id IN ({$ids_arr}) ORDER BY g.name ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        \Database::execute($stmt);
+
+        // return values from database
+        return $stmt;
 
     }
 
     public function readone(){
+        // query to select single record
+        $query = "SELECT
+                p.prod_id as product_id, p.price, p.image,g.name as guitar_name,
+                g.type as guitar_type, g.no_of_strings as strings
+                  FROM
+                " . $this->parent_tbl . " p
+                  LEFT JOIN
+                    $this->guitar_tbl g
+                  ON g.prod_id = p.prod_id WHERE p.prod_id = ?
+                  LIMIT 0,1";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+
+        // sanitize
+        $this->product_id=htmlspecialchars(strip_tags($this->product_id));
+
+        // bind product id value
+        $stmt->bindParam(1, $this->product_id);
+
+        // execute query
+        \Database::execute($stmt);
+
+        // get row values
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        // assign retrieved row value to object properties
+        $this->guitar_name = $row['guitar_name'];
+        $this->product_price = $row['price'];
+        $this->product_image = $row['image'];
 
     }
 

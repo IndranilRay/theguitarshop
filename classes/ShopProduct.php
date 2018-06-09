@@ -17,6 +17,7 @@ abstract class ShopProduct
     public $product_addded_on;
     public $product_type;
     public $product_quantiy;
+    public $product_image;
 
     abstract protected function getProductID();
 

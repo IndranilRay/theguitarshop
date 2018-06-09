@@ -18,7 +18,7 @@ interface iProduct
 
     public function count();
 
-    public function readById();
+    public function readByIds($ids);
 
     public function readone();
 

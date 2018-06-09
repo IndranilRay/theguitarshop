@@ -24,4 +24,18 @@ class Database
         }
         return $this->conn;
     }
+
+    public static function execute($stmt){
+
+
+        if (!$stmt->execute()) {
+            echo '<pre>';
+            print_r($stmt);
+            exit;
+
+            echo "\nPDO::errorInfo():\n";
+            print_r($stmt->errorInfo());
+            die(1);
+        }
+    }
 }

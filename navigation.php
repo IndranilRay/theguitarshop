@@ -21,7 +21,7 @@
                 </li>
 
                 <li <?php echo $page_title=="Cart" ? "class='active'" : ""; ?> >
-                    <a href="CartItem.php">
+                    <a href="cart.php">
                             <?php
                             // count products in cart
                             $cart_item->user_id=1; // default to user with ID "1" for now
