@@ -27,6 +27,7 @@ class CartItem implements iCart
         // query to count existing cart item
         $query = "SELECT count(*) FROM " . $this->table_name . " WHERE prod_id=:product_id AND user_id=:user_id";
 
+
         // prepare query statement
         $stmt = $this->conn->prepare( $query );
 
@@ -35,7 +36,7 @@ class CartItem implements iCart
         $this->user_id=htmlspecialchars(strip_tags($this->user_id));
 
         // bind category id variable
-        $stmt->bindParam(":product_id", $this->product_id);
+        $stmt->bindParam(":product_id", $this->prod_id);
         $stmt->bindParam(":user_id", $this->user_id);
 
         // execute query
